@@ -5,5 +5,49 @@
 {% endblock %}
 
 {% block main %}
+<script>
+    function validateForm() {
+        const county = document.getElementById('county').value;
+        if (!county) {
+            alert('Please select a county.');
+            return false;
+        }
+        return true;
+    }
+    
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        fetch('/info', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            const resultContainer = document.querySelector('#result-container');
+            resultContainer.innerHTML = data;
+        })
+        .catch(error => console.error(error));
+    });
+</script>
+
+<form method="post" onsubmit="return validateForm()">
+    <div class="mb-3">
+        <select name="county" id="county">
+            <option value="" disabled selected>County</option>
+            {% for county in counties %}
+            <option value="{{ county[0] }}">{{ county[0] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<div id="result-container">
+    <h1>{{ title }}</h1>
+    <div class="text-block">{{ summary }}</div>
+    </div>
 
 {% endblock %}

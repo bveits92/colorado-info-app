@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search for city itineraries
+{% endblock %}
+
+{% block main %}
+<div class="instructions">
+    <h3><p>Please select one of the Colorado's cities and then select a type of itinerary that you are looking for.</p></h3>
+</div>
+<form action="/itinerary" method="post">
+    <div class="mb-3">
+        <select name="city" id="city">
+            <option value="" disabled selected>Select a city</option>
+            {% for city in cities %}
+            <option value="{{ city }}">{{ city }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <select name="itinerary_type" id="itinerary_type">
+            <option value="" disabled selected>Select an itinerary</option>
+            {% for itinerary_aliases in itinerary_aliases %}
+            <option value="{{ itinerary_aliases }}">{{ itinerary_aliases }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+{% endblock %}

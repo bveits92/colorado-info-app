@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Itineraries search result
+{% endblock %}
+
+{% block head %}
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+<div id="map" style="height: 500px; width: 800px; margin: auto;"></div>
+<script>
+    var data = {{ data|tojson|safe }};
+    var city = "{{ city }}";
+
+    // Create the map and set the view to the center of the city
+    var map = L.map('map').setView([data.region.center.latitude, data.region.center.longitude], 11);
+
+    // Add the base map layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18
+    }).addTo(map);
+
+    // Loop through the search results and add a marker for each business
+    for (var i = 0; i < data.businesses.length; i++) {
+        var business = data.businesses[i];
+        var marker = L.marker([business.coordinates.latitude, business.coordinates.longitude]).addTo(map);
+        var popup = "<b>" + business.name + "</b><br>" + business.location.address1 + "<br>" + business.location.city + ", " + business.location.state + " " + business.location.zip_code;
+        marker.bindPopup(popup);
+    }
+
+    // Add a marker for the center of the city
+    var cityMarker = L.marker([data.region.center.latitude, data.region.center.longitude]).addTo(map);
+    cityMarker.bindPopup("<b>" + city + "</b>");
+</script>
+
+{% endblock %}

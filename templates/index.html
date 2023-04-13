@@ -7,9 +7,28 @@
 {% block main %}
 <h1>Welcome to state of Colorado population projections</h1>
 
-<p class="lead  ">
+<div>
+  <p class="text-block">
     In this website, you will get familiar with the state of Colorado.<br>
     You will see the population projections of the state by county.<br>
-    In addtion you can check the counties history which is taken from <a href="https://en.wikipedia.org/wiki/Main_Page">Wikipedia</a>
+    In addtion you can check the counties history which is taken from <a href="https://en.wikipedia.org/wiki/Main_Page">Wikipedia</a>.
   </p>
+
+    <img src="/static/img/welcome_co_sign.jpg" alt="Welcome_CO" class="image1">
+ </div>
+
+<div class="text-block">
+  <h2>
+    {{ title }}
+  </h2>
+  <p>
+    {{ summary }}
+    <br>
+  </p>
+</div>
+
+<img src="/static/img/MaroonBells.jpg" alt="MaroonBells" class="image2">
+
 {% endblock %}
+
+

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Graph Result{% endblock %}
+
+{% block main %}
+<div class="container-graph">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Graph esults of {{ gender }} population in {{ county }}.</h1>
+      {{ plot_div | safe }}
+    </div>
+  </div>
+</div>
+{% endblock %}

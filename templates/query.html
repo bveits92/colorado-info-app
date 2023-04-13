@@ -5,5 +5,49 @@
 {% endblock %}
 
 {% block main %}
+<div class="instructions">
+    <h3><p>Please select one of the Colorado's counties and then enter a year. <br>
+        Press male or female. If you didn't picked gender, total population will be displayed.</p></h3>
+</div>
+<form action="/query" method="post" onsubmit="return validateForm()">
+    <div class="mb-3">
+        <select name="county" id="county">
+            <option value="" disabled selected>County</option>
+            {% for county in counties %}
+            <option value="{{ county[0] }}">{{ county[0] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br>
+        <input type="radio" id="total" name="gender" value="total" checked>
+        <label for="total">Total</label><br>
+    </div>
+    <div class="mb-3">
+        <select name="year" id="year">
+            <option value="" disabled selected>Year</option>
+            {% for year in range(1990, 2051) %}
+            <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<script>
+    function validateForm() {
+        var county = document.getElementById("county").value;
+        var year = document.getElementById("year").value;
+        if (county == "" || year == "") {
+            alert("Please select a county and a year.");
+            return false;
+        }
+        return true;
+    }
+</script>
 
 {% endblock %}
