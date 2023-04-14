@@ -158,7 +158,7 @@ def itinerary():
         category_alias = request.form.get('itinerary_type')
 
 
-        url = f"https://api.yelp.com/v3/businesses/search?location={city}&radius=30000&categories={category_alias}&sort_by=best_match&limit=20"
+        url = f"https://api.yelp.com/v3/businesses/search?location={city}&term={category_alias}&sort_by=best_match&limit=30"
 
         headers = {
             "accept": "application/json",
@@ -168,7 +168,7 @@ def itinerary():
         response = requests.get(url, headers=headers)
         data = response.json()
 
-        return render_template('itinerary_r.html', data=data, city=city)
+        return render_template('itinerary_r.html', data=data, city=city, cities=cities, itinerary_aliases=itinerary_aliases)
 
 
     else:

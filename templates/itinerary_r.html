@@ -16,7 +16,27 @@
 {% endblock %}
 
 {% block main %}
+<form action="/itinerary" method="post">
+    <div class="mb-3">
+        <select name="city" id="city">
+            <option value="" disabled selected>Select a city</option>
+            {% for city in cities %}
+            <option value="{{ city }}">{{ city }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
+    <div class="mb-3">
+        <select name="itinerary_type" id="itinerary_type">
+            <option value="" disabled selected>Select an itinerary</option>
+            {% for itinerary_aliases in itinerary_aliases %}
+            <option value="{{ itinerary_aliases }}">{{ itinerary_aliases }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+<br>
 <div id="map" style="height: 500px; width: 800px; margin: auto;"></div>
 <script>
     var data = {{ data|tojson|safe }};
